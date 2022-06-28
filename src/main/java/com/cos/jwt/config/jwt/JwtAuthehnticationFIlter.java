@@ -68,7 +68,7 @@ public class JwtAuthehnticationFIlter extends UsernamePasswordAuthenticationFilt
 					authenticationManager.authenticate(authenticationToken);
 			
 			PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-			System.out.println("로그인 완료됨 : " + principalDetails.getUser().getUsername()); // 로그인이 정상적으로 되었다는 뜻.
+			// System.out.println("JwtAuthehnticationFIlter : 로그인 완료됨 :  유저이름 : " + principalDetails.getUser().getUsername()); // 로그인이 정상적으로 되었다는 뜻.
 			
 			// return 시 authentication 객체가 session영역에 저장 해야하고 그 방법이 return 해주면 됨.
 			// 리턴의 이유는 권한 관리를 security가 대신 해주기 때문에 편하려고.
@@ -95,12 +95,12 @@ public class JwtAuthehnticationFIlter extends UsernamePasswordAuthenticationFilt
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
 			Authentication authResult) throws IOException, ServletException {
-		System.out.println("successfulAuthentication 이 실행됨.");
+		System.out.println("successfulAuthentication : 로그인 완료 후 실행됨.");
 		PrincipalDetails principalDetails = (PrincipalDetails) authResult.getPrincipal();
 		// pom.xml에 jwt있음, build up pattern
 		// RSA 방식은 아니구 Hash암호 방
 		String jwtToken = JWT.create()
-				.withSubject("cos토큰") // 이름
+				.withSubject("JWT토큰") // 이름
 				.withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME)) // 만료시간 1000 = 1초, 
 				.withClaim("id", principalDetails.getUser().getId())  
 				.withClaim("username", principalDetails.getUser().getUsername())

@@ -28,10 +28,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //		http.addFilterBefore(new MyFilter3(), SecurityContextPersistenceFilter.class);
 
 		http.csrf().disable();
-		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // seession 사용 x , stateless																// server로 사용.
+		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // seession방식 사용 x , stateless  server로 사용.
 		.and().addFilter(corsFilter) // 인증이 있을 때(로그인 등) 시큐리티 필터에 등록
 		.formLogin().disable() // jwt server니까 form login 사용 x
-		.httpBasic().disable() // 기본적인 Http 도 안쓰고
+		.httpBasic().disable() // 기본적인 Http 도 안씀
 		.addFilter(new JwtAuthehnticationFIlter(authenticationManager())) // authenticationManager를 던져줘야함.
 		.addFilter(new JwtAuthorizationFilter(authenticationManager(), userRepository)) //
 		.authorizeRequests()
